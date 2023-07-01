@@ -39,6 +39,8 @@ dependencies:
   cloud_firestore: ^4.8.1
   firebase_crashlytics: ^3.3.3
   firebase_analytics: ^10.4.3
+  floor: ^1.4.2
+  http: ^0.13.6
 
 dev_dependencies:
   flutter_test:
@@ -63,9 +65,24 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/exemple_cocktail.png
+    - assets/images/homme_bar.jpg
+    - assets/images/blue.jpg
+    - assets/images/fleche.png
+    - assets/saucey_logo.png
+    - assets/images/category_party.jpg
+    - assets/images/category_beer.jpg
+    - assets/images/category_stylish.jpeg
+    - assets/images/category_tropical.jpeg
+    - assets/images/category_no_alcoholic.jpeg
+    - assets/images/category_famous.jpeg
+    - assets/images/barman.png
+    - assets/images/red_cocktail.png
+    - assets/saucey_logo.png
+    - assets/images/no_cocktail_found.png
+    - assets/images/no_cocktail_cart.png
+    - assets/saucey_big_logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
