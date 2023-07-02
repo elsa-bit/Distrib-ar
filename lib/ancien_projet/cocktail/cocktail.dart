@@ -61,7 +61,7 @@ class _CocktailState extends State<Cocktail> {
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Center(
             child: Image.asset(
-              'assets/saucey_logo.png',
+              'assets/distribar_logo.png',
               height: 53,
               width: 53,
             ),
