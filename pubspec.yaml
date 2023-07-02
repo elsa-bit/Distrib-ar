@@ -41,6 +41,7 @@ dependencies:
   firebase_analytics: ^10.4.3
   floor: ^1.4.2
   http: ^0.13.6
+  flutter_barcode_scanner: ^2.0.0
 
 dev_dependencies:
   flutter_test:

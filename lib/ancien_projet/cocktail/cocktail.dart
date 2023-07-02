@@ -1,6 +1,8 @@
-import 'package:distribar/ancien_projet/cocktail/search_bar_cocktail.dart';
 import 'package:distribar/ancien_projet/cocktail/viewmodel_cocktail.dart';
+import 'package:distribar/ancien_projet/utils/MyColors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import '../utils/custom_views/item_card_cocktail.dart';
 import '../utils/custom_views/no_cocktail_found.dart';
 import 'data_model_cocktail.dart';
@@ -14,7 +16,7 @@ class Cocktail extends StatefulWidget {
 
 class _CocktailState extends State<Cocktail> {
   late Future<DataClassTableCocktail> futureCocktail;
-
+  String _scanQRcode = 'Unknown';
 
   gridViewOfCocktails(AsyncSnapshot<DataClassTableCocktail> snapshot) {
     if (snapshot.data != null) {
@@ -44,7 +46,8 @@ class _CocktailState extends State<Cocktail> {
   @override
   void initState() {
     super.initState();
-    futureCocktail = ViewModelCocktail.fetchRandomCocktail() as Future<DataClassTableCocktail>;
+    futureCocktail = ViewModelCocktail.fetchRandomCocktail()
+        as Future<DataClassTableCocktail>;
   }
 
   @override
@@ -61,11 +64,6 @@ class _CocktailState extends State<Cocktail> {
               width: 53,
             ),
           ),
-        ),
-        /** Search Bar **/
-        const Padding(
-          padding: EdgeInsets.only(bottom: 25, right: 15, left: 15),
-          child: SearchBarFromCocktail(),
         ),
         /** Image Banner **/
         Padding(
@@ -99,6 +97,64 @@ class _CocktailState extends State<Cocktail> {
             ],
           ),
         ),
+        Row(
+          children: [
+            const SizedBox(width: 30),
+            TextButton(
+              onPressed: () {},
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.zero,
+                minimumSize: Size.zero,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Container(
+                  height: 35,
+                  width: 120,
+                  padding: EdgeInsets.only(top: 3, bottom: 3),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: MyColors.blue,
+                  ),
+                  child: Text(
+                    "Faire mes cocktails",
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 60),
+            TextButton(
+              onPressed: () => QrCodeScan(),
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.zero,
+                minimumSize: Size.zero,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Container(
+                  height: 35,
+                  width: 120,
+                  padding: EdgeInsets.only(top: 3, bottom: 3),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: MyColors.blueMedium,
+                  ),
+                  child: Text(
+                    "Scanner ma Distrib'ar",
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
         /** Call api to parse information into cards of cocktails **/
         Flexible(
           child: FutureBuilder<DataClassTableCocktail>(
@@ -122,5 +178,19 @@ class _CocktailState extends State<Cocktail> {
         ),
       ],
     );
+  }
+
+  Future<void> QrCodeScan() async {
+    String QrCodeScanRes;
+    try {
+      QrCodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.QR);
+    } on PlatformException {
+      QrCodeScanRes = 'Failed to get platform version.';
+    }
+    if (!mounted) return;
+    setState(() {
+      _scanQRcode = QrCodeScanRes;
+    });
   }
 }
