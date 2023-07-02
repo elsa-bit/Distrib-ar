@@ -12,7 +12,7 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int _selectedItem = 0;
+  int _selectedItem = 1;
 
   void _onItemTapped(int index) {
     setState(() {

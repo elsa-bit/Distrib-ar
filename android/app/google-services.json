@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "403608613158",
+    "firebase_url": "https://distrib-ar-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "distrib-ar",
     "storage_bucket": "distrib-ar.appspot.com"
   },
@@ -29,6 +30,13 @@
             {
               "client_id": "403608613158-dhhv0eus6so5k10naj0ru4dci1gu11u0.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "403608613158-dk88o36fp4h3p7e1j1c4db2562snp7g1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.distribar"
+              }
             }
           ]
         }

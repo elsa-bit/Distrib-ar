@@ -42,6 +42,8 @@ dependencies:
   floor: ^1.4.2
   http: ^0.13.6
   flutter_barcode_scanner: ^2.0.0
+  shared_preferences: ^2.2.0
+  firebase_database: ^10.2.3
 
 dev_dependencies:
   flutter_test:
@@ -69,21 +71,16 @@ flutter:
   assets:
     - assets/images/exemple_cocktail.png
     - assets/images/homme_bar.jpg
+    - assets/images/base_machine.png
     - assets/images/blue.jpg
     - assets/images/fleche.png
-    - assets/saucey_logo.png
-    - assets/images/category_party.jpg
-    - assets/images/category_beer.jpg
-    - assets/images/category_stylish.jpeg
-    - assets/images/category_tropical.jpeg
-    - assets/images/category_no_alcoholic.jpeg
-    - assets/images/category_famous.jpeg
     - assets/images/barman.png
     - assets/images/red_cocktail.png
-    - assets/saucey_logo.png
     - assets/images/no_cocktail_found.png
     - assets/images/no_cocktail_cart.png
     - assets/saucey_big_logo.png
+    - assets/saucey_logo.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

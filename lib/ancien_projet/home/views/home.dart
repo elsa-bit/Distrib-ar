@@ -1,7 +1,7 @@
 import 'package:distribar/ancien_projet/cart/views/cart_view.dart';
-import 'package:distribar/ancien_projet/category/views/category.dart';
 import 'package:distribar/ancien_projet/cocktail/cocktail.dart';
 import 'package:distribar/ancien_projet/home/views/bottom_nav_bar.dart';
+import 'package:distribar/config/config_screen.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -12,9 +12,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _currentIndex = 1;
+  int _currentIndex = 0;    //CHANGER A UN
   final screens = [
-    Category(),
+    Config(),
     Cocktail(),
     Cart(),
   ];

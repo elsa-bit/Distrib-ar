@@ -3,6 +3,7 @@ import 'package:distribar/ancien_projet/utils/MyColors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/custom_views/item_card_cocktail.dart';
 import '../utils/custom_views/no_cocktail_found.dart';
 import 'data_model_cocktail.dart';
@@ -182,12 +183,16 @@ class _CocktailState extends State<Cocktail> {
 
   Future<void> QrCodeScan() async {
     String QrCodeScanRes;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
     try {
       QrCodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.QR);
+      await prefs.setString('id_Distribar', QrCodeScanRes);
     } on PlatformException {
       QrCodeScanRes = 'Failed to get platform version.';
     }
+
     if (!mounted) return;
     setState(() {
       _scanQRcode = QrCodeScanRes;

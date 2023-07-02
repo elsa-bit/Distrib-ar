@@ -6,4 +6,7 @@ class MyColors {
   static const Color blue = Color(0xff5754E4);
   static const Color blueDark = Color(0xff323FB8);
   static const Color blueFonce = Color(0xff0E1B8C);
+
+  static const Color greyButton = Color(0xffF0F0F0);
+  static const Color greyConfig = Color(0xffF1F1F1);
 }
