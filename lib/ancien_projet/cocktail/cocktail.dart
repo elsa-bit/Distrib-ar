@@ -1,5 +1,6 @@
 import 'package:distribar/ancien_projet/cocktail/viewmodel_cocktail.dart';
 import 'package:distribar/ancien_projet/utils/MyColors.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -189,6 +190,21 @@ class _CocktailState extends State<Cocktail> {
       QrCodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.QR);
       await prefs.setString('id_Distribar', QrCodeScanRes);
+
+      final ref = FirebaseDatabase.instance.ref();
+      final snapshot = await ref.child(QrCodeScanRes).get();
+      if (!snapshot.exists) {
+        DatabaseReference ref = FirebaseDatabase.instance.ref(QrCodeScanRes);
+        await ref.set({
+          "config": {
+            "gpio1": "",
+            "gpio2": "",
+            "gpio3": "",
+            "gpio4": "",
+            "gpio5": "",
+          }
+        });
+      }
     } on PlatformException {
       QrCodeScanRes = 'Failed to get platform version.';
     }
