@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:distribar/ancien_projet/details/data_model_detail.dart';
+import 'package:distribar/details/data_model_detail.dart';
 import 'package:http/http.dart' as http;
 
 class ViewModelDetail {

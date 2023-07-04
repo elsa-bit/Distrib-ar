@@ -1,8 +1,11 @@
-import 'package:distribar/ancien_projet/cart/view_model/cart_view_model.dart';
-import 'package:distribar/ancien_projet/details/data_model_detail.dart';
-import 'package:distribar/ancien_projet/details/viewmodel_detail.dart';
+import 'dart:ui';
+
 import 'package:distribar/ancien_projet/utils/MyColors.dart';
+import 'package:distribar/details/data_model_detail.dart';
+import 'package:distribar/details/viewmodel_detail.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Detail extends StatefulWidget {
   String? id;
@@ -15,6 +18,9 @@ class Detail extends StatefulWidget {
 
 class _DetailState extends State<Detail> {
   late Future<DataClassTableDetail> futureCocktail;
+  final ref = FirebaseDatabase.instance.ref();
+  String idDistribar = '';
+  List<String?> listIngredient = [];
 
   @override
   void initState() {
@@ -23,36 +29,23 @@ class _DetailState extends State<Detail> {
   }
 
   detailCocktail(AsyncSnapshot<DataClassTableDetail> snapshot) {
-    var image = snapshot.data?.dataClassDetail[0].urlImage;
-    var name = snapshot.data?.dataClassDetail[0].nameCocktail;
-    var ing1 = snapshot.data?.dataClassDetail[0].ingredient1;
-    var ing2 = snapshot.data?.dataClassDetail[0].ingredient2;
-    var ing3 = snapshot.data?.dataClassDetail[0].ingredient3;
-    var ing4 = snapshot.data?.dataClassDetail[0].ingredient4;
-    var ing5 = snapshot.data?.dataClassDetail[0].ingredient5;
-    var ing6 = snapshot.data?.dataClassDetail[0].ingredient6;
-    var ing7 = snapshot.data?.dataClassDetail[0].ingredient7;
-    var inst = snapshot.data?.dataClassDetail[0].instruction;
-    var alc = snapshot.data?.dataClassDetail[0].alcoholic;
+    final cocktail = snapshot.data?.dataClassDetail[0];
+    var image = cocktail?.urlImage;
+    var name = cocktail?.nameCocktail;
+    var alc = cocktail?.alcoholic;
 
-    //Rassembler tous les ingredients en une liste
-    List<String> addIngredient = [];
-    void testIngredient(String? ing) {
-      if (ing != null) {
-        addIngredient.add(ing);
-      }
-    }
-
-    testIngredient(ing1);
-    testIngredient(ing2);
-    testIngredient(ing3);
-    testIngredient(ing4);
-    testIngredient(ing5);
-    testIngredient(ing6);
-    testIngredient(ing7);
+    listIngredient.addAll([
+      cocktail?.ingredient1,
+      cocktail?.ingredient2,
+      cocktail?.ingredient3,
+      cocktail?.ingredient4,
+      cocktail?.ingredient5,
+      cocktail?.ingredient6,
+      cocktail?.ingredient7,
+    ].where((ingredient) => ingredient != null && ingredient.isNotEmpty));
 
     //Convertir la liste en String
-    var detailResult = addIngredient.join(" // ");
+    var detailResult = listIngredient.join(" // ");
 
     if (snapshot.data != null) {
       return Column(
@@ -118,7 +111,7 @@ class _DetailState extends State<Detail> {
                    * Nom du cocktail
                    */
                   Container(
-                    height: 100,
+                    height: 50,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -159,7 +152,7 @@ class _DetailState extends State<Detail> {
                   ),
                   Container(
                     width: double.infinity,
-                    height: 70,
+                    height: 90,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -173,40 +166,14 @@ class _DetailState extends State<Detail> {
                     ),
                   ),
                   /**
-                   * Bouton d'achat
+                   * Bouton de fabrication
                    */
                   TextButton(
                     onPressed: () {
                       if (widget.id != null) {
-                        var successToAdd = CartViewModel.isAddedCocktailToCart(
-                            widget.id!, name, image);
-                        successToAdd.then((success) => {
-                              if (success)
-                                {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content:
-                                          Text("Cocktail added to the cart"),
-                                    ),
-                                  ),
-                                }
-                              else
-                                {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content:
-                                          Text("The cocktail can't be added"),
-                                    ),
-                                  ),
-                                }
-                            });
+                        _setCocktail();
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content:
-                                Text("A problem occurs, please try later "),
-                          ),
-                        );
+                        _showSnackBar(context, "A problem occurs, please try later ", Colors.orangeAccent);
                       }
                     },
                     style: TextButton.styleFrom(
@@ -233,33 +200,6 @@ class _DetailState extends State<Detail> {
                       ),
                     ),
                   ),
-                  /*
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 35,
-                        width: 120,
-                        decoration: BoxDecoration(
-                          color: MyColors.blueFonce,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 13, vertical: 10),
-                          width: double.infinity,
-                          child: Text(
-                            'Ajouter au panier',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  */
                 ],
               ),
             ),
@@ -267,7 +207,7 @@ class _DetailState extends State<Detail> {
         ],
       );
     } else {
-      return const Text("No cocktails available.");
+      return const Text("Pas de cocktails disponible.");
     }
   }
 
@@ -292,6 +232,30 @@ class _DetailState extends State<Detail> {
       ]),
     );
   }
+
+  void _setCocktail() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> listConfig = [];
+    idDistribar = prefs.getString('id_Distribar') ?? '';
+
+    for (var i = 1; i <= 5; i++) {
+      final snapshot = await ref.child('$idDistribar/config/gpio$i').get();
+      for (var ingredient in listIngredient) {
+        if (ingredient == snapshot.value) {
+          listConfig.add(ingredient!);
+        }
+      }
+    }
+
+    final snapshotCocktail = await ref.child('$idDistribar/cocktails').get();
+    if(snapshotCocktail.value == "" || snapshotCocktail.value == null){
+      ref.child(idDistribar).update({"cocktails": listConfig});
+      _showSnackBar(context, "Cocktail en préparation...", Colors.greenAccent);
+    }else{
+      _showSnackBar(context, "Il y a déjà un cocktail en cours !", Colors.orangeAccent);
+    }
+  }
+
 }
 
 class MyPainter extends CustomPainter {
@@ -311,19 +275,11 @@ class MyPainter extends CustomPainter {
   }
 }
 
-class MyPainter2 extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final p1 = Offset(10, 10);
-    final p2 = Offset(380, 10);
-    final paint = Paint()
-      ..color = MyColors.blueFonce
-      ..strokeWidth = 2;
-    canvas.drawLine(p1, p2, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter old) {
-    return false;
-  }
+void _showSnackBar(BuildContext context, String text, Color background) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(text),
+      backgroundColor: background,
+    ),
+  );
 }

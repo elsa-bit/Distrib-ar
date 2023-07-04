@@ -12,7 +12,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _currentIndex = 0;    //CHANGER A UN
+  int _currentIndex = 1;
   final screens = [
     Config(),
     Cocktail(),

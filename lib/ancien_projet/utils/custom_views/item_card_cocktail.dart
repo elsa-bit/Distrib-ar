@@ -1,7 +1,5 @@
-import 'package:distribar/ancien_projet/cart/view_model/cart_view_model.dart';
-import 'package:distribar/ancien_projet/details/views/detail_cocktail.dart';
 import 'package:distribar/ancien_projet/utils/MyColors.dart';
-import 'package:distribar/ancien_projet/utils/constants.dart';
+import 'package:distribar/details/views/detail_cocktail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

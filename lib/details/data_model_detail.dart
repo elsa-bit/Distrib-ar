@@ -25,7 +25,6 @@ class DataClassDetail {
   final String? ingredient6;
   final String? ingredient7;
   final String urlImage;
-  final String instruction;
 
   const DataClassDetail(
       {required this.idCocktail,
@@ -38,8 +37,7 @@ class DataClassDetail {
         required this.ingredient5,
         required this.ingredient6,
         required this.ingredient7,
-      required this.urlImage,
-      required this.instruction});
+      required this.urlImage,});
 
   factory DataClassDetail.fromJson(Map<String, dynamic> json) {
     return DataClassDetail(
@@ -53,8 +51,6 @@ class DataClassDetail {
       ingredient5: json['strIngredient5'],
       ingredient6: json['strIngredient6'],
       ingredient7: json['strIngredient7'],
-      urlImage: json['strDrinkThumb'],
-      instruction: json['strInstructions'],
-    );
+      urlImage: json['strDrinkThumb']);
   }
 }
