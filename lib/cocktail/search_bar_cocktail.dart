@@ -1,5 +1,5 @@
 import 'package:distribar/ancien_projet/search/views/search.dart';
-import 'package:distribar/ancien_projet/utils/MyColors.dart';
+import 'package:distribar/utils/MyColors.dart';
 import 'package:flutter/material.dart';
 
 class SearchBarFromCocktail extends StatelessWidget {

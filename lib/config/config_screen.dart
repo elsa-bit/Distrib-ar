@@ -1,4 +1,4 @@
-import 'package:distribar/ancien_projet/utils/MyColors.dart';
+import 'package:distribar/utils/MyColors.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';

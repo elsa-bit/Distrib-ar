@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:distribar/ancien_projet/utils/MyColors.dart';
 import 'package:distribar/details/data_model_detail.dart';
 import 'package:distribar/details/viewmodel_detail.dart';
+import 'package:distribar/utils/MyColors.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,11 +21,22 @@ class _DetailState extends State<Detail> {
   final ref = FirebaseDatabase.instance.ref();
   String idDistribar = '';
   List<String?> listIngredient = [];
+  List<String?> favorites = [];
 
   @override
   void initState() {
     super.initState();
     futureCocktail = ViewModelDetail.fetchSpecialCocktail(widget.id);
+    getFavoritesFromSharedPreferences().then((favorites) {
+      setState(() {
+        this.favorites = favorites;
+      });
+    });
+  }
+
+  Future<List<String>> getFavoritesFromSharedPreferences() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList('favorites') ?? [];
   }
 
   detailCocktail(AsyncSnapshot<DataClassTableDetail> snapshot) {
@@ -128,6 +139,20 @@ class _DetailState extends State<Detail> {
                       ],
                     ),
                   ),
+                  favorites.contains(widget.id)
+                      ? Icon(
+                          Icons.favorite,
+                          color: MyColors.blueMedium,
+                          size: 35,
+                        )
+                      : GestureDetector(
+                          onTap: _registerFavorite,
+                          child: Icon(
+                            Icons.favorite_border,
+                            color: MyColors.blueMedium,
+                            size: 35,
+                          ),
+                        ),
                   /**
                    * Ingredients
                    */
@@ -173,7 +198,10 @@ class _DetailState extends State<Detail> {
                       if (widget.id != null) {
                         _setCocktail();
                       } else {
-                        _showSnackBar(context, "A problem occurs, please try later ", Colors.orangeAccent);
+                        _showSnackBar(
+                            context,
+                            "A problem occurs, please try later ",
+                            Colors.orangeAccent);
                       }
                     },
                     style: TextButton.styleFrom(
@@ -248,14 +276,27 @@ class _DetailState extends State<Detail> {
     }
 
     final snapshotCocktail = await ref.child('$idDistribar/cocktails').get();
-    if(snapshotCocktail.value == "" || snapshotCocktail.value == null){
+    if (snapshotCocktail.value == "" || snapshotCocktail.value == null) {
       ref.child(idDistribar).update({"cocktails": listConfig});
       _showSnackBar(context, "Cocktail en préparation...", Colors.greenAccent);
-    }else{
-      _showSnackBar(context, "Il y a déjà un cocktail en cours !", Colors.orangeAccent);
+    } else {
+      _showSnackBar(
+          context, "Il y a déjà un cocktail en cours !", Colors.orangeAccent);
     }
   }
 
+  void _registerFavorite() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> favorites = prefs.getStringList('favorites') ?? [];
+
+    if (!favorites.contains(widget.id)) {
+      favorites.add(widget.id!);
+      await prefs.setStringList('favorites', favorites);
+      setState(() {
+        this.favorites = favorites;
+      });
+    }
+  }
 }
 
 class MyPainter extends CustomPainter {

@@ -1,5 +1,5 @@
-import 'package:distribar/ancien_projet/utils/MyColors.dart';
 import 'package:distribar/details/views/detail_cocktail.dart';
+import 'package:distribar/utils/MyColors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

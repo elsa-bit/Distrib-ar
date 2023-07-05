@@ -1,4 +1,4 @@
-import 'package:distribar/ancien_projet/utils/MyColors.dart';
+import 'package:distribar/utils/MyColors.dart';
 import 'package:flutter/material.dart';
 
 class NoCocktailFound extends StatelessWidget {

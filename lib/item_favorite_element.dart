@@ -1,12 +1,10 @@
+import 'package:distribar/utils/MyColors.dart';
 import 'package:flutter/material.dart';
 
 class ItemCartElement extends StatelessWidget {
   final String id;
   final String? photo;
   final String name;
-  final String category;
-  final String price;
-  final int quantity;
   final Function(bool) callback;
 
   const ItemCartElement(
@@ -14,15 +12,13 @@ class ItemCartElement extends StatelessWidget {
       required this.id,
       required this.photo,
       required this.name,
-      required this.category,
-      required this.price,
-      required this.quantity,
       required this.callback})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 80,
       margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -60,27 +56,10 @@ class ItemCartElement extends StatelessWidget {
                   maxLines: 1,
                 ),
               ),
-              Text(
-                category,
-                style: TextStyle(
-                    fontFamily: 'AlegreyaSans',
-                    color: Colors.grey,
-                    fontSize: 12),
-              ),
             ],
-          ),
-          Text(
-            price + "€",
-            style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
           ),
           SizedBox(
             width: 5,
-          ),
-          Text(
-            quantity.toString(),
-            style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
           ),
           GestureDetector(
             onTap: () {
@@ -88,7 +67,7 @@ class ItemCartElement extends StatelessWidget {
             },
             child: Icon(
               Icons.remove_circle,
-              color: Colors.grey,
+              color: MyColors.blueMedium,
             ),
           ),
         ],
