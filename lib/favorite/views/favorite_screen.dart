@@ -1,6 +1,6 @@
 import 'package:distribar/cocktail/viewmodel_cocktail.dart';
 import 'package:distribar/details/views/detail_cocktail.dart';
-import 'package:distribar/item_favorite_element.dart';
+import 'package:distribar/favorite/item_favorite_element.dart';
 import 'package:distribar/utils/MyColors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';

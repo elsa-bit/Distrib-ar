@@ -1,6 +1,6 @@
 import 'package:distribar/cocktail/cocktail.dart';
 import 'package:distribar/config/config_screen.dart';
-import 'package:distribar/favorite_screen.dart';
+import 'package:distribar/favorite/views/favorite_screen.dart';
 import 'package:distribar/home/views/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 

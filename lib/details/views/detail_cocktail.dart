@@ -20,7 +20,10 @@ class _DetailState extends State<Detail> {
   late Future<DataClassTableDetail> futureCocktail;
   final ref = FirebaseDatabase.instance.ref();
   String idDistribar = '';
+  bool ingredientAdded = false;
+  bool showButtonCocktail = false;
   List<String?> listIngredient = [];
+  List<String?> listConfig = [];
   List<String?> favorites = [];
 
   @override
@@ -32,11 +35,21 @@ class _DetailState extends State<Detail> {
         this.favorites = favorites;
       });
     });
+    _getConfigDistribar();
   }
 
   Future<List<String>> getFavoritesFromSharedPreferences() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getStringList('favorites') ?? [];
+  }
+
+  void _getConfigDistribar() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    idDistribar = prefs.getString('id_Distribar') ?? '';
+    for (var i = 1; i <= 5; i++) {
+      final snapshot = await ref.child('$idDistribar/config/gpio$i').get();
+      listConfig.add(snapshot.value as String?);
+    }
   }
 
   detailCocktail(AsyncSnapshot<DataClassTableDetail> snapshot) {
@@ -45,15 +58,20 @@ class _DetailState extends State<Detail> {
     var name = cocktail?.nameCocktail;
     var alc = cocktail?.alcoholic;
 
-    listIngredient.addAll([
-      cocktail?.ingredient1,
-      cocktail?.ingredient2,
-      cocktail?.ingredient3,
-      cocktail?.ingredient4,
-      cocktail?.ingredient5,
-      cocktail?.ingredient6,
-      cocktail?.ingredient7,
-    ].where((ingredient) => ingredient != null && ingredient.isNotEmpty));
+    if (!ingredientAdded) {
+      listIngredient.addAll([
+        cocktail?.ingredient1,
+        cocktail?.ingredient2,
+        cocktail?.ingredient3,
+        cocktail?.ingredient4,
+        cocktail?.ingredient5,
+        cocktail?.ingredient6,
+        cocktail?.ingredient7,
+      ].where((ingredient) => ingredient != null && ingredient.isNotEmpty));
+
+      showButtonCocktail = listIngredient.any((ingredient) => listConfig.contains(ingredient));
+      ingredientAdded = true;
+    }
 
     //Convertir la liste en String
     var detailResult = listIngredient.join(" // ");
@@ -193,41 +211,43 @@ class _DetailState extends State<Detail> {
                   /**
                    * Bouton de fabrication
                    */
-                  TextButton(
-                    onPressed: () {
-                      if (widget.id != null) {
-                        _setCocktail();
-                      } else {
-                        _showSnackBar(
-                            context,
-                            "A problem occurs, please try later ",
-                            Colors.orangeAccent);
-                      }
-                    },
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      minimumSize: Size.zero,
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Container(
-                        height: 35,
-                        width: 120,
-                        padding: EdgeInsets.only(top: 3, bottom: 3),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: MyColors.blueDark,
-                        ),
-                        child: Text(
-                          "Faire le cocktail",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
+                  showButtonCocktail
+                      ? TextButton(
+                          onPressed: () {
+                            if (widget.id != null) {
+                              _setCocktail();
+                            } else {
+                              _showSnackBar(
+                                  context,
+                                  "A problem occurs, please try later ",
+                                  Colors.orangeAccent);
+                            }
+                          },
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            minimumSize: Size.zero,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Container(
+                              height: 35,
+                              width: 120,
+                              padding: EdgeInsets.only(top: 3, bottom: 3),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: MyColors.blueDark,
+                              ),
+                              child: Text(
+                                "Faire le cocktail",
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
                 ],
               ),
             ),
@@ -262,9 +282,7 @@ class _DetailState extends State<Detail> {
   }
 
   void _setCocktail() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> listConfig = [];
-    idDistribar = prefs.getString('id_Distribar') ?? '';
 
     for (var i = 1; i <= 5; i++) {
       final snapshot = await ref.child('$idDistribar/config/gpio$i').get();
