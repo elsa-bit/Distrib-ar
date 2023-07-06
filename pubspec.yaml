@@ -44,6 +44,7 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
   shared_preferences: ^2.2.0
   firebase_database: ^10.2.3
+  select_searchable_list: ^0.1.05
 
 dev_dependencies:
   flutter_test:
