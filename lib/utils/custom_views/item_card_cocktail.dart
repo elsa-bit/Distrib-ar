@@ -22,7 +22,7 @@ class ItemCardCocktail extends StatelessWidget {
       child: FractionallySizedBox(
         widthFactor: 0.85,
         child: Container(
-          height: 250,
+          height: 200,
           decoration: BoxDecoration(
             border: Border.all(
               color: MyColors.blueFonce,
@@ -84,12 +84,12 @@ class ItemCardCocktail extends StatelessWidget {
                             alignment: Alignment.center,
                             color: MyColors.bluePale,
                             child: Text(
-                              "Alcoholic",
+                              "Distrib'ar",
                               style: TextStyle(fontSize: 8),
                             ),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

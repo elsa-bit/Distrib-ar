@@ -1,4 +1,5 @@
 import 'package:distribar/cocktail/viewmodel_cocktail.dart';
+import 'package:distribar/my_cocktail/views/my_cocktail.dart';
 import 'package:distribar/utils/MyColors.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _CocktailState extends State<Cocktail> {
             crossAxisCount: 2,
             childAspectRatio: MediaQuery.of(context).size.width /
                 (MediaQuery.of(context).size.height / 1.65)),
-        itemCount: 10,
+        itemCount: 50,
         itemBuilder: (context, index) {
           return ItemCardCocktail(
             cocktailId: snapshot.data?.dataClassCocktail[index].idCocktail,
@@ -103,7 +104,7 @@ class _CocktailState extends State<Cocktail> {
           children: [
             const SizedBox(width: 30),
             TextButton(
-              onPressed: () {},
+              onPressed: () => _myCocktail(),
               style: TextButton.styleFrom(
                 padding: EdgeInsets.zero,
                 minimumSize: Size.zero,
@@ -213,5 +214,12 @@ class _CocktailState extends State<Cocktail> {
     setState(() {
       _scanQRcode = QrCodeScanRes;
     });
+  }
+
+  void _myCocktail() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MyCocktail()),
+    );
   }
 }

@@ -74,6 +74,7 @@ flutter:
     - assets/images/base_machine.png
     - assets/images/blue.jpg
     - assets/images/fleche.png
+    - assets/images/fleche_blue.png
     - assets/images/barman.png
     - assets/images/red_cocktail.png
     - assets/images/no_cocktail_found.png
