@@ -61,6 +61,8 @@ class _ConfigState extends State<Config> {
     36: 'Lemonade',
     37: 'Tequila',
     38: 'Absinthe',
+    39: 'Coca',
+    40: 'Rum',
   };
   final List<int> _selectedAlcohol = [1];
 

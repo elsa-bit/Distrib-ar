@@ -16,7 +16,7 @@ class NoCocktailFound extends StatelessWidget {
           child: Image.asset("assets/images/no_cocktail_found.png"),
         ),
         const Padding(
-          padding: EdgeInsets.only(top: 25.0),
+          padding: EdgeInsets.only(top: 25.0, left: 30),
           child: Align(
             alignment: Alignment.center,
             child: Text(

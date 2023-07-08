@@ -68,6 +68,7 @@ class ItemCartElement extends StatelessWidget {
             child: Icon(
               Icons.remove_circle,
               color: MyColors.blueMedium,
+              size: 30,
             ),
           ),
         ],

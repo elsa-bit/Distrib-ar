@@ -14,16 +14,13 @@ class Favorite extends StatefulWidget {
 }
 
 class _FavoriteState extends State<Favorite> {
-  List<String> favorites = [];
+  //List<String> favorites = [];
+  late Future<List<String>> favoritesFuture;
 
   @override
   void initState() {
     super.initState();
-    getFavoritesFromSharedPreferences().then((value) {
-      setState(() {
-        favorites = value;
-      });
-    });
+    favoritesFuture = getFavoritesFromSharedPreferences();
   }
 
   Future<List<String>> getFavoritesFromSharedPreferences() async {
@@ -34,65 +31,78 @@ class _FavoriteState extends State<Favorite> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-          favorites.isNotEmpty ?
-      Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 20, bottom: 20),
-            child: Text(
-              'Mes Favoris',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: MyColors.blueFonce,
-              ),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: favorites.length,
-              itemBuilder: (context, index) {
-                final id = favorites[index];
+      body: FutureBuilder<List<String>>(
+        future: favoritesFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            final favorites = snapshot.data;
+            if (favorites != null && favorites.isNotEmpty) {
+              return Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(top: 20, bottom: 20),
+                    child: Text(
+                      'Mes Favoris',
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: MyColors.blueFonce,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: favorites.length,
+                      itemBuilder: (context, index) {
+                        final id = favorites[index];
 
-                return FutureBuilder<Map<String, dynamic>>(
-                  future: ViewModelCocktail.getCocktailDetailsById(id),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      final cocktail = snapshot.data!;
-                      final name = cocktail['strDrink'];
-                      final photo = cocktail['strDrinkThumb'];
+                        return FutureBuilder<Map<String, dynamic>>(
+                          future: ViewModelCocktail.getCocktailDetailsById(id),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              final cocktail = snapshot.data!;
+                              final name = cocktail['strDrink'];
+                              final photo = cocktail['strDrinkThumb'];
 
-                      return GestureDetector(
-                        onTap: () {
-                          _detailCocktail(id);
-                        },
-                        child: ItemCartElement(
-                          id: id,
-                          photo: photo,
-                          name: name,
-                          callback: (bool) {
-                            _removeFavorite(id);
+                              return GestureDetector(
+                                onTap: () {
+                                  _detailCocktail(id);
+                                },
+                                child: ItemCartElement(
+                                  id: id,
+                                  photo: photo,
+                                  name: name,
+                                  callback: (bool) {
+                                    _removeFavorite(id);
+                                  },
+                                ),
+                              );
+                            } else if (snapshot.hasError) {
+                              return ListTile(
+                                title: Text('Error: ${snapshot.error}'),
+                              );
+                            } else {
+                              return const ListTile(
+                                title: Text('Loading...'),
+                              );
+                            }
                           },
-                        ),
-                      );
-                    }else if (snapshot.hasError) {
-                      return ListTile(
-                        title: Text('Error: ${snapshot.error}'),
-                      );
-                    } else {
-                      return const ListTile(
-                        title: Text('Loading...'),
-                      );
-                    }
-                  },
-                );
-              },
-            ),
-          ),
-        ],
-      ) :
-              NoFavorisFound(),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return NoFavorisFound();
+            }
+          }
+        },
+      ),
     );
   }
 
@@ -106,7 +116,7 @@ class _FavoriteState extends State<Favorite> {
 
     await prefs.setStringList('favorites', favorites);
     setState(() {
-      this.favorites = favorites;
+      favoritesFuture = getFavoritesFromSharedPreferences();
     });
   }
 

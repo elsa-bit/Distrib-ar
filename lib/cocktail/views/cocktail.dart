@@ -190,6 +190,9 @@ class _CocktailState extends State<Cocktail> {
     try {
       QrCodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.QR);
+      if(QrCodeScanRes == '-1'){
+        return ;
+      }
       await prefs.setString('id_Distribar', QrCodeScanRes);
 
       final ref = FirebaseDatabase.instance.ref();

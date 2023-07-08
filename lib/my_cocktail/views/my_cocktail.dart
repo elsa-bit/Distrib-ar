@@ -15,7 +15,7 @@ class MyCocktail extends StatefulWidget {
 }
 
 class _MyCocktailState extends State<MyCocktail> {
-  late Future<DataClassTableCocktail> futureCocktail;
+  Future<DataClassTableCocktail>? futureCocktail;
   List<String> listConfig = [];
 
   gridViewOfCocktails(AsyncSnapshot<DataClassTableCocktail> snapshot) {
@@ -47,6 +47,7 @@ class _MyCocktailState extends State<MyCocktail> {
   @override
   void initState() {
     super.initState();
+    futureCocktail = null;
     _recupConfig();
   }
 
