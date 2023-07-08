@@ -139,22 +139,31 @@ class _DetailState extends State<Detail> {
                   /**
                    * Nom du cocktail
                    */
-                  Container(
-                    height: 50,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            name!,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 24),
-                          ),
-                        )
-                      ],
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: Container(
+                      height: 50,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Flexible(
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Wrap(
+                                children: [
+                                  Text(
+                                    name!,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 24),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   favorites.contains(widget.id)

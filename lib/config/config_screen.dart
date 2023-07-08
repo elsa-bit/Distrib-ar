@@ -15,7 +15,7 @@ class _ConfigState extends State<Config> {
   bool isButtonHovered = false;
   int selectedBottle = 0;
   String idDistribar = '';
-  TextEditingController _alcoholController = TextEditingController();
+  final TextEditingController _alcoholController = TextEditingController();
   final ref = FirebaseDatabase.instance.ref();
 
   final Map<int, String> _listAlcohol = {

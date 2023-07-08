@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../utils/custom_views/item_card_cocktail.dart';
-import '../utils/custom_views/no_cocktail_found.dart';
-import 'data_model_cocktail.dart';
+import '../../utils/custom_views/item_card_cocktail.dart';
+import '../../utils/custom_views/no_cocktail_found.dart';
+import '../data_model_cocktail.dart';
 
 class Cocktail extends StatefulWidget {
   const Cocktail({Key? key}) : super(key: key);
