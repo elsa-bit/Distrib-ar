@@ -2,6 +2,7 @@ import 'package:distribar/cocktail/viewmodel_cocktail.dart';
 import 'package:distribar/details/views/detail_cocktail.dart';
 import 'package:distribar/favorite/item_favorite_element.dart';
 import 'package:distribar/utils/MyColors.dart';
+import 'package:distribar/utils/custom_views/no_favori_found.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,7 +34,9 @@ class _FavoriteState extends State<Favorite> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body:
+          favorites.isNotEmpty ?
+      Column(
         children: [
           const Padding(
             padding: EdgeInsets.only(top: 20, bottom: 20),
@@ -88,7 +91,8 @@ class _FavoriteState extends State<Favorite> {
             ),
           ),
         ],
-      ),
+      ) :
+              NoFavorisFound(),
     );
   }
 

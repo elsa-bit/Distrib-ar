@@ -79,6 +79,7 @@ flutter:
     - assets/images/barman.png
     - assets/images/red_cocktail.png
     - assets/images/no_cocktail_found.png
+    - assets/images/no_distribar_found.png
     - assets/images/no_favoris_found.png
     - assets/distribar_logo.png
 
