@@ -69,7 +69,12 @@ class _DetailState extends State<Detail> {
         cocktail?.ingredient7,
       ].where((ingredient) => ingredient != null && ingredient.isNotEmpty));
 
-      showButtonCocktail = listIngredient.any((ingredient) => listConfig.contains(ingredient));
+      for (var ingredient in listIngredient) {
+        if (listConfig.contains(ingredient)) {
+          showButtonCocktail = true;
+          break;
+        }
+      }
       ingredientAdded = true;
     }
 
@@ -184,7 +189,7 @@ class _DetailState extends State<Detail> {
                    * Ingredients
                    */
                   Container(
-                    height: 80,
+                    height: 60,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -202,59 +207,142 @@ class _DetailState extends State<Detail> {
                       ],
                     ),
                   ),
-                  Container(
-                    width: double.infinity,
-                    height: 90,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: ListView(
-                            padding: const EdgeInsets.all(1),
-                            children: [Text(detailResult)],
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 15),
+                    child: Container(
+                      width: double.infinity,
+                      height: 50,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(1),
+                              child: Text(detailResult),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   /**
                    * Bouton de fabrication
                    */
                   showButtonCocktail
-                      ? TextButton(
-                          onPressed: () {
-                            if (widget.id != null) {
-                              _setCocktail();
-                            } else {
-                              _showSnackBar(
-                                  context,
-                                  "A problem occurs, please try later ",
-                                  Colors.orangeAccent);
-                            }
-                          },
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            minimumSize: Size.zero,
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: Container(
-                              height: 35,
-                              width: 120,
-                              padding: EdgeInsets.only(top: 3, bottom: 3),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: MyColors.blueDark,
+                      ? Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    if (widget.id != null) {
+                                      _setCocktail(1);
+                                    } else {
+                                      _showSnackBar(
+                                          context,
+                                          "A problem occurs, please try later ",
+                                          Colors.orangeAccent);
+                                    }
+                                  },
+                                  style: TextButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                    minimumSize: Size.zero,
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: Container(
+                                      height: 35,
+                                      width: 120,
+                                      padding:
+                                          EdgeInsets.only(top: 1, bottom: 1),
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: MyColors.blueDark,
+                                      ),
+                                      child: Text(
+                                        "Small cocktail",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    if (widget.id != null) {
+                                      _setCocktail(2);
+                                    } else {
+                                      _showSnackBar(
+                                          context,
+                                          "A problem occurs, please try later ",
+                                          Colors.orangeAccent);
+                                    }
+                                  },
+                                  style: TextButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                    minimumSize: Size.zero,
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: Container(
+                                      height: 35,
+                                      width: 120,
+                                      padding:
+                                          EdgeInsets.only(top: 1, bottom: 1),
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: MyColors.blueDark,
+                                      ),
+                                      child: Text(
+                                        "Medium cocktail",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                if (widget.id != null) {
+                                  _setCocktail(3);
+                                } else {
+                                  _showSnackBar(
+                                      context,
+                                      "A problem occurs, please try later ",
+                                      Colors.orangeAccent);
+                                }
+                              },
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                minimumSize: Size.zero,
                               ),
-                              child: Text(
-                                "Faire le cocktail",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Container(
+                                  height: 35,
+                                  width: 120,
+                                  padding: EdgeInsets.only(top: 1, bottom: 1),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: MyColors.blueDark,
+                                  ),
+                                  child: Text(
+                                    "Large cocktail",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         )
                       : SizedBox(),
                 ],
@@ -290,14 +378,16 @@ class _DetailState extends State<Detail> {
     );
   }
 
-  void _setCocktail() async {
+  void _setCocktail(int size) async {
     List<String> listConfig = [];
 
-    for (var i = 1; i <= 5; i++) {
-      final snapshot = await ref.child('$idDistribar/config/gpio$i').get();
-      for (var ingredient in listIngredient) {
-        if (ingredient == snapshot.value) {
-          listConfig.add(ingredient!);
+    for (var j = 0; j < size; j++) {
+      for (var i = 1; i <= 5; i++) {
+        final snapshot = await ref.child('$idDistribar/config/gpio$i').get();
+        for (var ingredient in listIngredient) {
+          if (ingredient == snapshot.value) {
+            listConfig.add(ingredient!);
+          }
         }
       }
     }
