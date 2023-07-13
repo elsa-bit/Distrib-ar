@@ -122,7 +122,7 @@ class _ConfigState extends State<Config> {
                               _setCleanDistribar();
                             },
                             icon: Icon(
-                              Icons.wash,
+                              Icons.water_drop_outlined,
                               color: Colors.white,
                             ),
                           ),
