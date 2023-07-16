@@ -119,7 +119,7 @@ class _ConfigState extends State<Config> {
                           ),
                           child: IconButton(
                             onPressed: () {
-                              _setCleanDistribar();
+                              _confirmCleanDistribar();
                             },
                             icon: Icon(
                               Icons.water_drop_outlined,
@@ -244,8 +244,7 @@ class _ConfigState extends State<Config> {
                         options: _listAlcohol,
                         selectedOptions: _selectedAlcohol,
                         onChanged: (selectedIds) {
-                          setState(
-                              () => _selectedAlcohol[0] = selectedIds![0]);
+                          setState(() => _selectedAlcohol[0] = selectedIds![0]);
                         },
                       ),
                     ),
@@ -290,9 +289,9 @@ class _ConfigState extends State<Config> {
     });
 
     final snapshot = await ref.child('$idDistribar/config/gpio$location').get();
-    if(snapshot.value == null){
+    if (snapshot.value == null) {
       _alcoholController.text = "";
-    }else{
+    } else {
       _alcoholController.text = snapshot.value.toString();
     }
 
@@ -307,6 +306,55 @@ class _ConfigState extends State<Config> {
     ref
         .child('$idDistribar/config')
         .update({"gpio$selectedBottle": selectedAlcohol});
+  }
+
+  Future<void> _confirmCleanDistribar() async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return _confirmationDialog(context);
+      },
+    );
+  }
+  AlertDialog _confirmationDialog(BuildContext context) {
+    return AlertDialog(
+      title: const Text(
+        "Êtes-vous sûr de vouloir lancer un nettoyage pour votre distribar ?",
+      ),
+      content: const Text("Pensez à mettre de l'eau dans toutes les bouteilles"),
+      actions: [
+        TextButton(
+          onPressed: () {
+            _setCleanDistribar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Nettoyage en cours..."),
+                backgroundColor: Colors.greenAccent,
+              ),
+            );
+            Navigator.of(context).pop();
+          },
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+          ),
+          child: const Text("Confirmer"),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+          ),
+          child: const Text("Annuler"),
+        ),
+      ],
+      elevation: 24.0,
+      backgroundColor: MyColors.bluePale,
+      contentTextStyle: const TextStyle(
+        color: Colors.white,
+      ),
+    );
   }
 
   void _setCleanDistribar() {
