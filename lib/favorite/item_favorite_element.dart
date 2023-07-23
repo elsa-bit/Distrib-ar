@@ -19,11 +19,11 @@ class ItemCartElement extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 80,
-      margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+      margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.grey,
             blurRadius: 4,
@@ -36,7 +36,7 @@ class ItemCartElement extends StatelessWidget {
         children: [
           Container(
             height: 50,
-            padding: EdgeInsets.only(left: 15),
+            padding: const EdgeInsets.only(left: 15),
             child: Image.network(photo!),
           ),
           Column(
@@ -48,7 +48,7 @@ class ItemCartElement extends StatelessWidget {
                 child: Text(
                   name,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontFamily: 'AlegreyaSans',
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -58,14 +58,14 @@ class ItemCartElement extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             width: 5,
           ),
           GestureDetector(
             onTap: () {
               callback(true);
             },
-            child: Icon(
+            child: const Icon(
               Icons.remove_circle,
               color: MyColors.blueMedium,
               size: 30,

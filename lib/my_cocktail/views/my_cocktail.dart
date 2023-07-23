@@ -81,7 +81,7 @@ class _MyCocktailState extends State<MyCocktail> {
                   Navigator.pop(context);
                 },
                 child: Container(
-                  padding: EdgeInsets.only(top: 50, left: 20),
+                  padding: const EdgeInsets.only(top: 50, left: 20),
                   child: Image.asset('assets/images/fleche_blue.png'),
                 ),
               ),
@@ -104,7 +104,6 @@ class _MyCocktailState extends State<MyCocktail> {
               future: futureCocktail,
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
-                  print('Error : ${snapshot.error}');
                   return const SingleChildScrollView(
                     physics: NeverScrollableScrollPhysics(),
                     child: Padding(

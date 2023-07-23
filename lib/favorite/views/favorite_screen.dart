@@ -35,7 +35,7 @@ class _FavoriteState extends State<Favorite> {
         future: favoritesFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else {
@@ -98,7 +98,7 @@ class _FavoriteState extends State<Favorite> {
                 ],
               );
             } else {
-              return NoFavorisFound();
+              return const NoFavorisFound();
             }
           }
         },

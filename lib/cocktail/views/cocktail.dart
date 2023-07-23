@@ -114,12 +114,12 @@ class _CocktailState extends State<Cocktail> {
                 child: Container(
                   height: 35,
                   width: 120,
-                  padding: EdgeInsets.only(top: 3, bottom: 3),
+                  padding: const EdgeInsets.only(top: 3, bottom: 3),
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: MyColors.blue,
                   ),
-                  child: Text(
+                  child: const Text(
                     "Faire mes cocktails",
                     style: TextStyle(
                         fontSize: 12,
@@ -141,12 +141,12 @@ class _CocktailState extends State<Cocktail> {
                 child: Container(
                   height: 35,
                   width: 120,
-                  padding: EdgeInsets.only(top: 3, bottom: 3),
+                  padding: const EdgeInsets.only(top: 3, bottom: 3),
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: MyColors.blueMedium,
                   ),
-                  child: Text(
+                  child: const Text(
                     "Scanner ma Distrib'ar",
                     style: TextStyle(
                         fontSize: 12,
@@ -164,7 +164,6 @@ class _CocktailState extends State<Cocktail> {
             future: futureCocktail,
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                print('Error : ${snapshot.error}');
                 return const SingleChildScrollView(
                   physics: NeverScrollableScrollPhysics(),
                   child: Padding(
@@ -184,21 +183,21 @@ class _CocktailState extends State<Cocktail> {
   }
 
   Future<void> QrCodeScan() async {
-    String QrCodeScanRes;
+    String qrCodeScanRes;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     try {
-      QrCodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+      qrCodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.QR);
-      if(QrCodeScanRes == '-1'){
+      if(qrCodeScanRes == '-1'){
         return ;
       }
-      await prefs.setString('id_Distribar', QrCodeScanRes);
+      await prefs.setString('id_Distribar', qrCodeScanRes);
 
       final ref = FirebaseDatabase.instance.ref();
-      final snapshot = await ref.child(QrCodeScanRes).get();
+      final snapshot = await ref.child(qrCodeScanRes).get();
       if (!snapshot.exists) {
-        DatabaseReference ref = FirebaseDatabase.instance.ref(QrCodeScanRes);
+        DatabaseReference ref = FirebaseDatabase.instance.ref(qrCodeScanRes);
         await ref.set({
           "config": {
             "gpio1": "",
@@ -210,19 +209,19 @@ class _CocktailState extends State<Cocktail> {
         });
       }
     } on PlatformException {
-      QrCodeScanRes = 'Failed to get platform version.';
+      qrCodeScanRes = 'Failed to get platform version.';
     }
 
     if (!mounted) return;
     setState(() {
-      _scanQRcode = QrCodeScanRes;
+      _scanQRcode = qrCodeScanRes;
     });
   }
 
   void _myCocktail() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MyCocktail()),
+      MaterialPageRoute(builder: (context) => const MyCocktail()),
     );
   }
 }

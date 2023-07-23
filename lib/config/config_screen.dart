@@ -1,5 +1,4 @@
 import 'package:distribar/utils/MyColors.dart';
-import 'package:distribar/utils/custom_views/no_cocktail_found.dart';
 import 'package:distribar/utils/custom_views/no_distribar_found.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -83,13 +82,13 @@ class _ConfigState extends State<Config> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: FutureBuilder<String?>(
           future: idDistribarFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else {
               final idDistribar = snapshot.data;
               if (idDistribar != null && idDistribar.isNotEmpty) {
@@ -99,7 +98,7 @@ class _ConfigState extends State<Config> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(
+                        const Padding(
                           padding:
                               EdgeInsets.only(top: 20, bottom: 40, left: 80),
                           child: Text(
@@ -111,9 +110,9 @@ class _ConfigState extends State<Config> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 30),
+                        const SizedBox(width: 30),
                         Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: MyColors.bluePale,
                             shape: BoxShape.circle,
                           ),
@@ -121,7 +120,7 @@ class _ConfigState extends State<Config> {
                             onPressed: () {
                               _confirmCleanDistribar();
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.water_drop_outlined,
                               color: Colors.white,
                             ),
@@ -129,7 +128,7 @@ class _ConfigState extends State<Config> {
                         ),
                       ],
                     ),
-                    Text(
+                    const Text(
                       'Spécifiez les alcools présents aux différents \n emplacements de votre Distrib’ar',
                       style: TextStyle(
                         fontSize: 15,
@@ -154,7 +153,7 @@ class _ConfigState extends State<Config> {
                                   _attributeSelectionedBottle(2);
                                 });
                               },
-                              icon: Icon(Icons.circle),
+                              icon: const Icon(Icons.circle),
                               color: selectedBottle == 2
                                   ? MyColors.bluePale
                                   : MyColors.greyConfig,
@@ -170,7 +169,7 @@ class _ConfigState extends State<Config> {
                                   _attributeSelectionedBottle(3);
                                 });
                               },
-                              icon: Icon(Icons.circle),
+                              icon: const Icon(Icons.circle),
                               color: selectedBottle == 3
                                   ? MyColors.bluePale
                                   : MyColors.greyConfig,
@@ -186,7 +185,7 @@ class _ConfigState extends State<Config> {
                                   _attributeSelectionedBottle(4);
                                 });
                               },
-                              icon: Icon(Icons.circle),
+                              icon: const Icon(Icons.circle),
                               color: selectedBottle == 4
                                   ? MyColors.bluePale
                                   : MyColors.greyConfig,
@@ -202,7 +201,7 @@ class _ConfigState extends State<Config> {
                                   _attributeSelectionedBottle(1);
                                 });
                               },
-                              icon: Icon(Icons.circle),
+                              icon: const Icon(Icons.circle),
                               color: selectedBottle == 1
                                   ? MyColors.bluePale
                                   : MyColors.greyConfig,
@@ -218,7 +217,7 @@ class _ConfigState extends State<Config> {
                                   _attributeSelectionedBottle(5);
                                 });
                               },
-                              icon: Icon(Icons.circle),
+                              icon: const Icon(Icons.circle),
                               color: selectedBottle == 5
                                   ? MyColors.bluePale
                                   : MyColors.greyConfig,
@@ -235,7 +234,7 @@ class _ConfigState extends State<Config> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                           top: 20, bottom: 15, right: 15, left: 15),
                       child: DropDownTextField(
                         textEditingController: _alcoholController,
@@ -274,7 +273,7 @@ class _ConfigState extends State<Config> {
                   ],
                 );
               } else {
-                return NoDistribarFound();
+                return const NoDistribarFound();
               }
             }
           },

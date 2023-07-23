@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:distribar/details/data_model_detail.dart';
 import 'package:distribar/details/viewmodel_detail.dart';
 import 'package:distribar/utils/MyColors.dart';
@@ -89,12 +87,10 @@ class _DetailState extends State<Detail> {
               /**
                * Image du cocktail
                */
-              Container(
-                child: ClipRRect(
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Image.network(image!),
-                  ),
+              ClipRRect(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Image.network(image!),
                 ),
               ),
               GestureDetector(
@@ -102,7 +98,7 @@ class _DetailState extends State<Detail> {
                   Navigator.pop(context);
                 },
                 child: Container(
-                  padding: EdgeInsets.only(left: 20, top: 70),
+                  padding: const EdgeInsets.only(left: 20, top: 70),
                   child: Image.asset('assets/images/fleche.png'),
                 ),
               ),
@@ -110,11 +106,11 @@ class _DetailState extends State<Detail> {
           ),
           Expanded(
             child: SingleChildScrollView(
-              padding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+              padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
               scrollDirection: Axis.vertical,
               child: Column(
                 children: [
-                  Container(
+                  SizedBox(
                     height: 40,
                     /**
                      * Button Alcoholic or No
@@ -134,7 +130,7 @@ class _DetailState extends State<Detail> {
                             child: Text(
                               alc!,
                               style:
-                                  TextStyle(fontSize: 11, color: Colors.black),
+                                  const TextStyle(fontSize: 11, color: Colors.black),
                             ),
                           ),
                         ),
@@ -146,7 +142,7 @@ class _DetailState extends State<Detail> {
                    */
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20),
-                    child: Container(
+                    child: SizedBox(
                       height: 50,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,7 +154,7 @@ class _DetailState extends State<Detail> {
                                 children: [
                                   Text(
                                     name!,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black,
                                         fontSize: 24),
@@ -172,14 +168,14 @@ class _DetailState extends State<Detail> {
                     ),
                   ),
                   favorites.contains(widget.id)
-                      ? Icon(
+                      ? const Icon(
                           Icons.favorite,
                           color: MyColors.blueMedium,
                           size: 35,
                         )
                       : GestureDetector(
                           onTap: _registerFavorite,
-                          child: Icon(
+                          child: const Icon(
                             Icons.favorite_border,
                             color: MyColors.blueMedium,
                             size: 35,
@@ -188,12 +184,12 @@ class _DetailState extends State<Detail> {
                   /**
                    * Ingredients
                    */
-                  Container(
+                  SizedBox(
                     height: 60,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Ingredients",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -201,15 +197,15 @@ class _DetailState extends State<Detail> {
                               fontSize: 16),
                         ),
                         CustomPaint(
-                          size: Size(20, 20),
+                          size: const Size(20, 20),
                           painter: MyPainter(),
                         ),
                       ],
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 15),
-                    child: Container(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: SizedBox(
                       width: double.infinity,
                       height: 50,
                       child: Row(
@@ -254,12 +250,12 @@ class _DetailState extends State<Detail> {
                                       height: 35,
                                       width: 120,
                                       padding:
-                                          EdgeInsets.only(top: 1, bottom: 1),
+                                          const EdgeInsets.only(top: 1, bottom: 1),
                                       alignment: Alignment.center,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         color: MyColors.blueDark,
                                       ),
-                                      child: Text(
+                                      child: const Text(
                                         "Small cocktail",
                                         style: TextStyle(
                                             fontSize: 12,
@@ -290,12 +286,12 @@ class _DetailState extends State<Detail> {
                                       height: 35,
                                       width: 120,
                                       padding:
-                                          EdgeInsets.only(top: 1, bottom: 1),
+                                          const EdgeInsets.only(top: 1, bottom: 1),
                                       alignment: Alignment.center,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         color: MyColors.blueDark,
                                       ),
-                                      child: Text(
+                                      child: const Text(
                                         "Medium cocktail",
                                         style: TextStyle(
                                             fontSize: 12,
@@ -327,12 +323,12 @@ class _DetailState extends State<Detail> {
                                 child: Container(
                                   height: 35,
                                   width: 120,
-                                  padding: EdgeInsets.only(top: 1, bottom: 1),
+                                  padding: const EdgeInsets.only(top: 1, bottom: 1),
                                   alignment: Alignment.center,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     color: MyColors.blueDark,
                                   ),
-                                  child: Text(
+                                  child: const Text(
                                     "Large cocktail",
                                     style: TextStyle(
                                         fontSize: 12,
@@ -344,7 +340,7 @@ class _DetailState extends State<Detail> {
                             ),
                           ],
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                 ],
               ),
             ),
@@ -365,7 +361,6 @@ class _DetailState extends State<Detail> {
             future: futureCocktail,
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                print('Error : ${snapshot.error}');
                 return const Text("An error occurs, try later.");
               } else if (snapshot.hasData) {
                 return detailCocktail(snapshot);
@@ -429,8 +424,8 @@ class _DetailState extends State<Detail> {
 class MyPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final p1 = Offset(-70, 25);
-    final p2 = Offset(300, 25);
+    const p1 = Offset(-70, 25);
+    const p2 = Offset(300, 25);
     final paint = Paint()
       ..color = MyColors.blueFonce
       ..strokeWidth = 2;

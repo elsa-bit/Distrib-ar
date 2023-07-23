@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       handlers: [
         FirebaseAnalyticsHandler(),
       ],
-      child: MaterialApp(
+      child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Home(),
       ),
