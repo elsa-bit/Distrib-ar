@@ -394,11 +394,12 @@ class _DetailState extends State<Detail> {
 
     final snapshotCocktail = await ref.child('$idDistribar/cocktails').get();
     final snapshotCleanDistribar = await ref.child('$idDistribar/nettoyage').get();
+    final mlIngredient = listConfig.length * 3.5 ;
 
     if(snapshotCleanDistribar.value == 0){
       if (snapshotCocktail.value == "" || snapshotCocktail.value == null) {
         ref.child(idDistribar).update({"cocktails": listConfig});
-        _showSnackBar(context, "Cocktail en préparation...", Colors.greenAccent);
+        _showSnackBar(context, "Cocktail de $mlIngredient ml en préparation...", Colors.greenAccent);
       } else {
         _showSnackBar(
             context, "Il y a déjà un cocktail en cours !", Colors.orangeAccent);
