@@ -39,6 +39,12 @@ dependencies:
   cloud_firestore: ^4.8.1
   firebase_crashlytics: ^3.3.3
   firebase_analytics: ^10.4.3
+  floor: ^1.4.2
+  http: ^0.13.6
+  flutter_barcode_scanner: ^2.0.0
+  shared_preferences: ^2.2.0
+  firebase_database: ^10.2.3
+  select_searchable_list: ^0.1.05
 
 dev_dependencies:
   flutter_test:
@@ -63,9 +69,20 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/exemple_cocktail.png
+    - assets/images/homme_bar.jpg
+    - assets/images/base_machine.png
+    - assets/images/blue.jpg
+    - assets/images/fleche.png
+    - assets/images/fleche_blue.png
+    - assets/images/barman.png
+    - assets/images/red_cocktail.png
+    - assets/images/no_cocktail_found.png
+    - assets/images/no_distribar_found.png
+    - assets/images/no_favoris_found.png
+    - assets/distribar_logo.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
