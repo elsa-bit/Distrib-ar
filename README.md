@@ -1,16 +1,11 @@
-# distribar
+# Distrib'ar
 
 Projet Annuel - Distri'bar
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Application Flutter relié avec un bar connecté qui nous permet de faire des cocktails en fonction des boissons que nous avons renseignés sur notre bar.
+Possibilité de faire un nettoyage de la machine + choisir la quantité pour notre cocktail (petit/moyen/grand)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Source
+API : TheCocktailDB
