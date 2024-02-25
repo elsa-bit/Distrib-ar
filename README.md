@@ -1,6 +1,6 @@
 # Distrib'ar
 
-Projet Annuel - Distri'bar
+Projet Annuel 4MOC
 
 ## Getting Started
 
